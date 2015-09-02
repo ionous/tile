@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="27" height="23" tilewidth="32" tileheight="32" backgroundcolor="#000000" nextobjectid="1">
+ <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32" tilecount="18">
+  <image source="../../../../../../alice-app/data/tiles/lpc/grass.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="19" name="grassalt" tilewidth="32" tileheight="32" tilecount="18">
+  <image source="../../../../../../alice-app/data/tiles/lpc/grassalt.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="37" name="watergrass" tilewidth="32" tileheight="32" tilecount="18">
+  <image source="../../../../../../alice-app/data/tiles/lpc/watergrass.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="55" name="inside" tilewidth="32" tileheight="32" tilecount="100">
+  <image source="../../../../../../alice-app/data/tiles/lpc/inside.png" width="320" height="320"/>
+ </tileset>
+ <tileset firstgid="155" name="cabinets" tilewidth="32" tileheight="32" tilecount="78">
+  <image source="../../../../../../alice-app/data/tiles/lpc/cabinets.png" width="192" height="416"/>
+ </tileset>
+ <tileset firstgid="233" name="Interior-Furniture" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="../../../../../../alice-app/data/tiles/Skorpio's Pack/Interior-Furniture.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="489" name="Interior-Walls-Beige" tilewidth="32" tileheight="32" tilecount="100">
+  <image source="../../../../../../alice-app/data/tiles/Skorpio's Pack/Interior-Walls-Beige.png" width="320" height="320"/>
+ </tileset>
+ <tileset firstgid="589" name="Objects" tilewidth="32" tileheight="32" tilecount="64">
+  <image source="../../../../../../alice-app/data/tiles/Skorpio's Pack/Objects.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="653" name="Pipes-RustyWalls" tilewidth="32" tileheight="32" tilecount="88">
+  <image source="../../../../../../alice-app/data/tiles/Skorpio's Pack/Pipes-RustyWalls.png" width="256" height="352"/>
+ </tileset>
+ <tileset firstgid="741" name="victoria" tilewidth="32" tileheight="32" tilecount="55">
+  <image source="../../../../../../alice-app/data/tiles/lpc/victoria.png" width="352" height="160"/>
+ </tileset>
+ <tileset firstgid="796" name="dungeon" tilewidth="32" tileheight="32" tilecount="104">
+  <image source="../../../../../../alice-app/data/tiles/lpc/dungeon.png" width="416" height="256"/>
+ </tileset>
+ <tileset firstgid="900" name="slime" tilewidth="32" tileheight="32" tilecount="12">
+  <image source="../../../../../../alice-app/data/tiles/lpc-sprites/monsters/slime.png" width="96" height="128"/>
+ </tileset>
+ <tileset firstgid="912" name="princess" tilewidth="32" tileheight="32" tilecount="144">
+  <image source="../../../../../../alice-app/data/tiles/lpc-sprites/people/princess.png" width="576" height="256"/>
+ </tileset>
+ <tileset firstgid="1056" name="Interior-Walls-Blue" tilewidth="32" tileheight="32" tilecount="100">
+  <image source="../../../../../../../Documents/tiles/Skorpio's Pack/Interior-Walls-Blue.png" width="320" height="320"/>
+ </tileset>
+ <tileset firstgid="1156" name="waterfall" tilewidth="32" tileheight="32" tilecount="15">
+  <image source="../../../../../../alice-app/data/tiles/lpc/waterfall.png" width="96" height="160"/>
+ </tileset>
+ <tileset firstgid="1171" name="water" tilewidth="32" tileheight="32" tilecount="18">
+  <image source="../../../../../../alice-app/data/tiles/lpc/water.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="1189" name="mountains" tilewidth="32" tileheight="32" tilecount="108">
+  <image source="../../../../../../alice-app/data/tiles/lpc/mountains.png" width="384" height="288"/>
+ </tileset>
+ <tileset firstgid="1297" name="dirt2" tilewidth="32" tileheight="32" tilecount="18">
+  <image source="../../../../../../alice-app/data/tiles/lpc/dirt2.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="1315" name="airplane" tilewidth="32" tileheight="32" tilecount="88">
+  <image source="../../../../../../alice-app/data/tiles/sithjester/airplane.png" width="256" height="352"/>
+ </tileset>
+ <tileset firstgid="1403" name="treetop" tilewidth="32" tileheight="32" tilecount="42">
+  <image source="../../../../../../alice-app/data/tiles/lpc/treetop.png" width="192" height="224"/>
+ </tileset>
+ <tileset firstgid="1445" name="trunk" tilewidth="32" tileheight="32" tilecount="18">
+  <image source="../../../../../../alice-app/data/tiles/lpc/trunk.png" width="192" height="96"/>
+ </tileset>
+ <tileset firstgid="1463" name="treetop_small" tilewidth="32" tileheight="32" tilecount="16">
+  <image source="../../../../../../alice-app/data/tiles/lpc/treetop_small.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="1479" name="trunk_small" tilewidth="32" tileheight="32" tilecount="8">
+  <image source="../../../../../../alice-app/data/tiles/lpc/trunk_small.png" width="128" height="64"/>
+ </tileset>
+ <tileset firstgid="1487" name="bridges" tilewidth="32" tileheight="32" tilecount="42">
+  <image source="../../../../../../alice-app/data/tiles/lpc/bridges.png" width="192" height="224"/>
+ </tileset>
+ <tileset firstgid="1529" name="environment_assets" tilewidth="32" tileheight="32" tilecount="49">
+  <image source="../../../../../../alice-app/data/tiles/turin/environment_assets.png" width="224" height="224"/>
+ </tileset>
+ <tileset firstgid="1578" name="vine" tilewidth="32" tileheight="32" tilecount="12">
+  <image source="../../../../../../alice-app/data/tiles/vine.png" width="128" height="96"/>
+ </tileset>
+ <tileset firstgid="1590" name="man_eater_flower" tilewidth="32" tileheight="32" tilecount="6">
+  <image source="../../../../../../alice-app/data/tiles/man_eater_flower.png" width="64" height="96"/>
+ </tileset>
+ <layer name="ground-dirt" width="27" height="23">
+  <properties>
+   <property name="prop" value="hello"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJytlE1KA0EQhYtkAko0blUU3Puv6Hm8h/Ev/iQxXsFtQNRFdJGt4AHUhXod3zDdpPJS3T1gBj5maqaqX71Kd1o1kZbjGDTBiYtPwRk4Vzk5F+5+GYjLwDVX4BrcUF4bdEA3EJeBa25BD9wFfMZinpEF1/fVN/YZi625sj7Xa232GYutubI+17N2n/oLPVs+LP2YF+4v9Fx2f1petL7uL/Qc25/ar+WF9VPzCu0Hy+9DQr/svKz3qX3zCJ7AM5iR8XwrzpmVyXVD/nXeALyAV1CXdJwzJ+M9cv8h3RUZrbEONhJsOi3dA/fP811C/jJYVFpbYDvBjtPSV+o/MfejvU5DS6/n5+v9aK+W1oEjpeX3jF7Pz3dVCrTX//jyv4Fez2t49F6ahpZej7V4P++CPfCB+FPxVSve5+xHtAbG7Dx1ogIa4Bu5P6CXFfff4hy/VWV0viwtvc6aQVXGz+gwK7hX+HfzrpeFiFbFfR9mk/j6BuUcihx5rDpLy+u80/fU1UZ+B3RL1P0BRxb7zA==
+  </data>
+ </layer>
+</map>
