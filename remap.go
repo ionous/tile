@@ -1,7 +1,7 @@
 package tile
 
 import (
-	"github.org/ionous/tile/flare"
+	"github.com/ionous/tile/flare"
 	"sort"
 )
 

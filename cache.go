@@ -2,7 +2,7 @@ package tile
 
 import (
 	"fmt"
-	"github.org/ionous/tile/flare"
+	"github.com/ionous/tile/flare"
 	"image"
 	"os"
 	"path"
