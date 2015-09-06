@@ -2,56 +2,119 @@ package tile
 
 import (
 	"fmt"
-	"github.com/ionous/tile/flare"
 	"image"
 	"image/draw"
 	"math"
 )
 
-// Clip image data from the passed (flare) data
-func Clip(header flare.Header,
-	tilesets flare.Tilesets,
-	imagePath string,
-	remap Remap,
-) (
-	img image.Image,
+// type Clipper interface {
+// 	// width and height of each tile (in pixels)
+// 	TileSize() (int, int)
+// 	// given a global tile index, find the sheet and cell.
+// 	GetTile(TileId) (TileRef, bool)
+// 	// given a global sheet index, retreive the sheet.
+// 	GetSheet(SheetIndex) (Sheet, bool)
+// }
+
+// Clip image data from the passed data
+func Clip(tiles TileSets, remap Remap) (
+	_ image.Image,
 	err error,
 ) {
-	cache := NewCache(imagePath, tilesets)
-	fcnt := float64(len(remap.indices))
+	// determine the number of tiles necessary to fit all of the indicies we have used.
+	clipper := NewClipper(tiles)
+	fcnt := float64(remap.NumTiles())
 	tilesWide := int(math.Floor(math.Sqrt(fcnt)))
 	tilesHigh := int(math.Ceil(fcnt / float64(tilesWide)))
-	out := image.NewRGBA(image.Rect(0, 0, tilesWide*header.TileWidth, tilesHigh*header.TileHeight))
+	//
+	tileWidth, tileHeight := tiles.TileSize()
+	rect := image.Rect(0, 0, tilesWide*tileWidth, tilesHigh*tileHeight)
+	if rect.Empty() {
+		panic("clipping empty tile")
+	}
+	out := image.NewRGBA(rect)
 	outPt := image.Pt(0, 0)
 
-	it := MakeIterator(tilesets, cache)
-	for _, index := range remap.indices {
-		if tileIndex, ok := it.Find(index); !ok {
-			err = fmt.Errorf("couldn't find index %d", index)
+	for _, id := range remap.Tiles() {
+		if tile, ok := clipper.GetTile(id); !ok {
+			err = fmt.Errorf("couldnt find tile %v", id)
 			break
-		} else if tile, e := cache.GetImage(tileIndex.Tile); e != nil {
-			err = e
+		} else if sheet, ok := clipper.GetSheet(tile.Sheet); !ok {
+			err = fmt.Errorf("couldnt find sheet %v", tile)
+			break
+		} else if srcRect, ok := sheet.Bounds(tile.Cell); !ok {
+			err = fmt.Errorf("couldnt find cell %v", tile)
 			break
 		} else {
-			ux, uy := outPt.X*header.TileWidth, outPt.Y*header.TileHeight
-			//
-			if tileX, tileY, ok := tile.GetXY(tileIndex.Index); !ok {
-				err = fmt.Errorf("tile out of range?! %d", tileIndex.Index)
-				break
-			} else if srcRect := tile.Bounds(tileX, tileY); srcRect.Empty() {
-				err = fmt.Errorf("tile empty?! %d, %d", tileX, tileY)
-				break
+			if srcRect.Empty() {
+				panic("clipping empty bounds")
+			}
+			ux, uy := outPt.X*tileWidth, outPt.Y*tileHeight
+			outRect := image.Rect(ux, uy, ux+srcRect.Dx(), uy+srcRect.Dy())
+			draw.Draw(out, outRect, sheet.Image, srcRect.Min, draw.Src)
+			// move to the next output tile
+			if x := outPt.X + 1; x < tilesWide {
+				outPt.X = x
 			} else {
-				outRect := image.Rect(ux, uy, ux+srcRect.Dx(), uy+srcRect.Dy())
-				draw.Draw(out, outRect, tile.Image, srcRect.Min, draw.Src)
-				// move to the next output tile
-				if x := outPt.X + 1; x < tilesWide {
-					outPt.X = x
-				} else {
-					outPt.X, outPt.Y = 0, outPt.Y+1
-				}
+				outPt.X, outPt.Y = 0, outPt.Y+1
 			}
 		}
 	}
 	return out, err
+}
+
+func NewClipper(ts TileSets) *Clipper {
+	cache := NewCache(ts)
+	return &Clipper{ts, 0, 0, cache}
+}
+
+type Clipper struct {
+	tiles      TileSets
+	sheetIndex SheetIndex
+	startingId TileId
+	cache      *Cache
+}
+
+// global tile index.
+func (clip *Clipper) GetTile(id TileId) (TileRef, bool) {
+	return clip.find(id)
+}
+
+// global sheet index.
+func (clip *Clipper) GetSheet(sheet SheetIndex) (ret Sheet, okay bool) {
+	if tile, e := clip.cache.LoadTileSheet(sheet); e == nil {
+		ret = tile
+		okay = true
+	}
+	return ret, okay
+}
+
+func (clip *Clipper) find(id TileId) (ret TileRef, okay bool) {
+	// reset
+	index := id
+	if index < clip.startingId {
+		clip.sheetIndex = 0
+		clip.startingId = 0
+	}
+
+	// search through all tile sheets to find the matching tile id
+	for clip.sheetIndex <= clip.tiles.MaxSheet() {
+		if sheet, e := clip.cache.LoadTileSheet(clip.sheetIndex); e != nil {
+			panic(e)
+			break
+		} else {
+			tilesWide, tilesHigh := sheet.NumTiles()
+			numTiles := tilesWide * tilesHigh
+			if subIndex := int(index - clip.startingId); subIndex < numTiles {
+				cell := CellIndex(subIndex)
+				ret = TileRef{clip.sheetIndex, cell}
+				okay = true
+				break
+			} else {
+				clip.startingId = clip.startingId.Advance(numTiles)
+				clip.sheetIndex++
+			}
+		}
+	}
+	return
 }

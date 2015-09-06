@@ -1,28 +1,37 @@
 package tmx
 
 import (
-	// "compress/zlib"
-	// "encoding/base64"
-	// "encoding/binary"
+	"github.com/ionous/tile/tiled"
 	"github.com/stretchr/testify/assert"
-	// "strings"
 	"testing"
 )
+
+func TestDecompress2(t *testing.T) {
+	src := EmbeddedData{
+		Encoding:    "base64",
+		Compression: "zlib",
+		Content:     "eJxjYBgFpIJ4KuBRs0bNGjWLOmZRCwAA97dLtQ==",
+	}
+	width, height := 19, 17
+	out := make([]tiled.Tile, width*height)
+	e := src.Decompress(out)
+	assert.NoError(t, e)
+}
 
 func TestDecompress(t *testing.T) {
 	src := EmbeddedData{
 		Encoding:    "base64",
 		Compression: "zlib",
-		Data:        compressedData,
+		Content:     compressedData,
 	}
 	width, height := 27, 23
-	out := make([]uint32, width*height)
+	out := make([]tiled.Tile, width*height)
 	if e := src.Decompress(out); assert.NoError(t, e) {
 		ref, rows := rawData, out
 		for y := 0; y < height; y++ {
 			if assert.NoError(t, e) {
 				for x, v := range ref[:width] {
-					res, src := rows[x], uint32(v)
+					res, src := rows[x], tiled.Tile(v)
 					if res != src {
 						t.Fatalf("Values don't match (%dx%d) %v!= %v", x, y, res, src)
 					}

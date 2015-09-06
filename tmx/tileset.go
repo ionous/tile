@@ -2,8 +2,10 @@ package tmx
 
 // If there are multiple <tileset> elements, they are in ascending order of their firstgid attribute. The first tileset always has a firstgid value of 1 and it can be assumed that there are no gaps in the valid range of global tile IDs.
 type TileSet struct {
-	FirstGid   int    `xml:"firstgid,attr"`                  // 1.0 The first global tile ID of this tileset (this global ID maps to the first tile in this tileset).
-	Source     string `xml:"source,attr" json:",omitempty"`  // If this tileset is stored in an external TSX (Tile Set XML) file, this attribute refers to that file. That TSX file has the same structure as the <tileset> element described here. (There is the firstgid attribute missing and this source attribute is also not there. These two attributes are kept in the TMX map, since they are map specific.)
+	// 1.0 The first global tile ID of this tileset (this global ID maps to the first tile in this tileset).
+	FirstGid int `xml:"firstgid,attr"`
+	// If this tileset is stored in an external TSX (Tile Set XML) file, this attribute refers to that file. That TSX file has the same structure as the <tileset> element described here. (There is the firstgid attribute missing and this source attribute is also not there. These two attributes are kept in the TMX map, since they are map specific.)
+	Source     string `xml:"source,attr" json:",omitempty"`
 	Name       string `xml:"name,attr"`                      // The name of this tileset.
 	TileWidth  int    `xml:"tilewidth,attr"`                 // The (maximum) width of the tiles in this tileset.
 	TileHeight int    `xml:"tileheight,attr"`                // The (maximum) height of the tiles in this tileset.

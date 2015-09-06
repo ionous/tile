@@ -8,8 +8,8 @@ type Map struct {
 	Orientation string      `xml:"orientation,attr"`     //Orientation supports "orthogonal", "isometric" and "staggered" (since 0.9) at the moment.
 	Width       int         `xml:"width,attr"`           // Width in tiles.
 	Height      int         `xml:"height,attr"`          // Height in tiles.
-	TileWidth   int         `xml:"tilewidth,attr"`       //Width of a tile.
-	TileHeight  int         `xml:"tileheight,attr"`      //Height of a tile.
+	TileWidth   int         `xml:"tilewidth,attr"`       // Width of a tile. ( in pixels )
+	TileHeight  int         `xml:"tileheight,attr"`      // Height of a tile. ( in pixels )
 	Background  ColorString `xml:"backgroundcolor,attr"` // Background color of the map. (since 0.9, optional)
 	// order in which tiles on tile layers are rendered. Valid values are right-down (the default), right-up, left-down and left-up. In all cases, the map is drawn row-by-row. (since 0.10, but only supported for orthogonal maps at the moment)
 	Order string `xml:"renderorder,attr"`

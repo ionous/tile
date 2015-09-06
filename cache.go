@@ -2,41 +2,43 @@ package tile
 
 import (
 	"fmt"
-	"github.com/ionous/tile/flare"
+	"github.com/ionous/sashimi/util/errutil"
 	"image"
 	"os"
-	"path"
 )
 
+// Cache of tile sheet images contained by a TileSets.
 type Cache struct {
-	path     string
-	tilesets flare.Tilesets
-	img      Image
-	idx      int
+	tileSets TileSets
+	img      Sheet
+	idx      SheetIndex
 }
 
-func NewCache(path string, tilesets flare.Tilesets) *Cache {
-	return &Cache{path: path, tilesets: tilesets}
+func NewCache(tileSets TileSets) *Cache {
+	return &Cache{tileSets: tileSets}
 }
 
-func (cache *Cache) GetImage(idx int) (ret Image, err error) {
-	if cache.img.IsValid() && cache.idx == idx {
-		ret = cache.img
-	} else if numTiles := len(cache.tilesets); idx >= numTiles {
-		err = fmt.Errorf("index of out of range %d %d", idx, numTiles)
+func (c *Cache) LoadTileSheet(idx SheetIndex) (ret Sheet, err error) {
+	width, height := c.tileSets.TileSize()
+
+	if c.img.IsValid() && c.idx == idx {
+		ret = c.img
+	} else if maxSheet := c.tileSets.MaxSheet(); idx > maxSheet {
+		err = fmt.Errorf("index of out of range %v > %v", idx, maxSheet)
 	} else {
-		tile := cache.tilesets[idx]
-		full := path.Join(cache.path, tile.Path)
-		if r, e := os.Open(full); e != nil {
-			err = e
+		path := c.tileSets.Path(idx)
+		if r, e := os.Open(path); e != nil {
+			err = errutil.Append(
+				fmt.Errorf("error loading tilesheet %v,%s", idx, path), e)
 		} else {
 			defer r.Close()
 			if img, _, e := image.Decode(r); e != nil {
-				err = e
+				err = errutil.Append(
+					fmt.Errorf("error decoding tilesheet %v,%s", idx, path), e)
 			} else {
-				cache.img = Image{img, tile.Width, tile.Height}
-				cache.idx = idx
-				ret = cache.img
+				c.img = Sheet{img, path, width, height}
+				c.idx = idx
+				ret = c.img
 			}
 		}
 	}

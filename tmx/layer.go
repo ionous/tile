@@ -14,14 +14,20 @@ type TileLayer struct {
 }
 
 type LayerData struct {
-	Name    string  `xml:"name,attr"`                      // Name of the image layer.
-	X       int     `xml:"x,attr" json:",omitempty"`       // X position of the image layer
-	Y       int     `xml:"y,attr" json:",omitempty"`       // Y position of the image layer
-	Width   int     `xml:"width,attr"`                     //Width of the image layer in tiles. Meaningless.
-	Height  int     `xml:"height,attr"`                    //Height of the image layer in tiles. Meaningless.
-	Opacity Opacity `xml:"opacity,attr" json:",omitempty"` // The opacity of the layer as a value from 0 to 1. Defaults to 1.
-
-	Visible Visible `xml:"visible,attr" json:",omitempty"` // Whether the layer is shown (1) or hidden (0). Defaults to 1.
+	// Name of the image layer.
+	Name string `xml:"name,attr"`
+	// X position of the image layer
+	X int `xml:"x,attr" json:",omitempty"`
+	// Y position of the image layer
+	Y int `xml:"y,attr" json:",omitempty"`
+	// Width of the image layer in tiles. Meaningless.
+	Width int `xml:"width,attr"`
+	// Height of the image layer in tiles. Meaningless.
+	Height int `xml:"height,attr"`
+	// Opacity of the layer as a value from 0 to 1. Defaults to 1.
+	Opacity Opacity `xml:"opacity,attr" json:",omitempty"`
+	// Visible if the layer is shown (1) or hidden (0). Defaults to 1.
+	Visible Visible `xml:"visible,attr" json:",omitempty"`
 }
 
 type Visible string
