@@ -5,7 +5,7 @@ import (
 )
 
 // compare two string arrays
-func (a Path) Compare(b []string) (ret int) {
+func Compare(a []string, b []string) (ret int) {
 	la, lb := len(a), len(b)
 	if sub := la - lb; sub != 0 {
 		ret = sub

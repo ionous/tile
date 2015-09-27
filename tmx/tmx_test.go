@@ -13,7 +13,7 @@ func TestTmxReader(t *testing.T) {
 		assert.Equal(t, "1.0", d.Version)
 		if out, e := json.MarshalIndent(d, "", "  "); assert.NoError(t, e) {
 			assert.NotEmpty(t, out)
-			//t.Log(string(out))
+			t.Log(string(out))
 		}
 	}
 }

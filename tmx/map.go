@@ -14,9 +14,21 @@ type Map struct {
 	// order in which tiles on tile layers are rendered. Valid values are right-down (the default), right-up, left-down and left-up. In all cases, the map is drawn row-by-row. (since 0.10, but only supported for orthogonal maps at the moment)
 	Order string `xml:"renderorder,attr"`
 
-	Properties  *Properties   `xml:"properties,omitempty" json:",omitempty"`
-	TileSet     []TileSet     `xml:"tileset" json:",omitempty"`
-	Layer       []TileLayer   `xml:"layer" json:",omitempty"`
-	ObjectGroup []ObjectGroup `xml:"objectgroup" json:",omitempty"`
-	ImageLayer  []ImageLayer  `xml:"imagelayer" json:",omitempty"`
+	Properties *Properties `xml:"properties,omitempty" json:",omitempty"`
+	TileSet    []TileSet   `xml:"tileset" json:",omitempty"`
+
+	// the txm format has three different tags for layers
+	// ( <layer>, <imagelayer>, and <objectgroup> )
+	// if we called out the tags individually we would loose their inter-ordering; instead we load them all into a single "uniform layer"
+	// meaning: we cant serialize directly back out...
+	Layers []UniformLayer `xml:",any" json:",omitempty"`
+}
+
+func (m *Map) ReverseLayers() {
+	a := m.Layers
+	for i := len(a)/2 - 1; i >= 0; i-- {
+		opp := len(a) - 1 - i
+		a[i], a[opp] = a[opp], a[i]
+	}
+	m.Layers = a
 }

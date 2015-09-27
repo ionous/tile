@@ -2,17 +2,6 @@ package tmx
 
 import "strconv"
 
-// All <tileset> tags shall occur before the first <layer> tag so that parsers may rely on having the tilesets before needing to resolve tiles.
-type TileLayer struct {
-	// LayerData:
-	//  x and y coordinates are in tiles. Defaults to 0 and can no longer be changed in Tiled Qt.
-	// width: The width of the layer in tiles. Traditionally required, but as of Tiled Qt always the same as the map width.
-	// height: The height of the layer in tiles. Traditionally required, but as of Tiled Qt 	always the same as the map height.
-	LayerData
-	Properties *Properties  `xml:"properties,omitempty" json:",omitempty"`
-	Data       EmbeddedData `xml:"data"`
-}
-
 type LayerData struct {
 	// Name of the image layer.
 	Name string `xml:"name,attr"`

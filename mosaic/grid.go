@@ -12,7 +12,7 @@ type RotType int8
 //  func Set(x, y int, c color.Color)
 //  func SubImage(r Rectangle) Image
 type Grid struct {
-	// Cells holds the image's pixels, as gray values. The pixel at
+	// Cells holds the image's ppixels, as gray values. The pixel at
 	// (x, y) starts at Cells[(y-Rect.Min.Y)*Stride + (x-Rect.Min.X)*1].
 	//Cells []Cell
 	Tile []TileType `json:",omitempty"`
@@ -20,6 +20,7 @@ type Grid struct {
 	// Stride (in bytes) between vertically adjacent pixels.
 	Stride int
 	// Rect bounds in cells.
+	// FIX??!?!?! I almost think this would be better in pixels at the  "layer" level.
 	Rect image.Rectangle
 	// CellSize in pixels.
 	CellSize image.Point
