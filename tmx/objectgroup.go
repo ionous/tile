@@ -1,6 +1,11 @@
 package tmx
 
-type ObjectGroup struct {
+type Object struct {
+	Id     int     `xml:"id,attr"`     // Unique ID of the object. Each object that is placed on a map gets a unique id. Even if an object was deleted, no object gets the same ID. Can not be changed in Tiled Qt. (since Tiled 0.11)
+	X      float32 `xml:"x,attr"`      // x: The x coordinate of the object in pixels.
+	Y      float32 `xml:"y,attr"`      // y: The y coordinate of the object in pixels.
+	Width  float32 `xml:"width,attr"`  // width: The width of the object in pixels (defaults to 0).
+	Height float32 `xml:"height,attr"` // height: The height of the object in pixels (defaults to 0).
 }
 
 // <objectgroup>
@@ -18,13 +23,8 @@ type ObjectGroup struct {
 // Can contain: properties, object
 
 // <object>
-// id: Unique ID of the object. Each object that is placed on a map gets a unique id. Even if an object was deleted, no object gets the same ID. Can not be changed in Tiled Qt. (since Tiled 0.11)
 // name: The name of the object. An arbitrary string.
 // type: The type of the object. An arbitrary string.
-// x: The x coordinate of the object in pixels.
-// y: The y coordinate of the object in pixels.
-// width: The width of the object in pixels (defaults to 0).
-// height: The height of the object in pixels (defaults to 0).
 // rotation: The rotation of the object in degrees clockwise (defaults to 0). (since 0.10)
 // gid: An reference to a tile (optional).
 // visible: Whether the object is shown (1) or hidden (0). Defaults to 1. (since 0.9)

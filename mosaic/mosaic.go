@@ -16,26 +16,29 @@ type Layer struct {
 	Grid   *Grid    `json:",omitempty"`
 	Image  *Image   `json:",omitempty"`
 	Bounds image.Rectangle
-	Hidden bool
 	// x,y, rotation, etc.
 	// effects.
 	// pixel size?
 }
 
+// FindLayer returns the identified layer, if it exists.
 func (m *Map) FindLayer(path []string) *Layer {
 	return m.findLayer(path, false)
 }
 
+// EnsureLayer returns the identified layer, creating all or any of the hierarchy of layers necessary.
 func (m *Map) EnsureLayer(path []string) *Layer {
 	return m.findLayer(path, true)
 }
 
+// Append a new layer of the passed name; doesn't verify whether or not the name is unique.
 func (l *Layer) Append(name string) *Layer {
 	newL := &Layer{Name: name}
 	l.Layers = append(l.Layers, newL)
 	return newL
 }
 
+// findLayer unifies the code for FindLayer and EnsureLayer.
 func (l *Layer) findLayer(path []string, create bool) (ret *Layer) {
 	if len(path) == 0 {
 		ret = l

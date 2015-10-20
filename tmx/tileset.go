@@ -28,10 +28,9 @@ type TileSetTile struct {
 	// id: The local tile ID within its tileset.
 	// terrain: Defines the terrain type of each corner of the tile, given as comma-separated indexes in the terrain types array in the order top-left, top-right, bottom-left, bottom-right. Leaving out a value means that corner has no terrain. (optional) (since 0.9)
 	// probability: A percentage indicating the probability that this tile is chosen when it competes with others while editing with the terrain tool. (optional) (since 0.9)
-	Properties  *Properties  `xml:"properties,omitempty"`
-	Image       *Image       `xml:"image,omitempty"`
-	ObjectGroup *ObjectGroup `xml:"objectgroup,omitempty"`
-	Animation   *Animation   `xml:"animation,omitempty"`
+	Properties *Properties `xml:"properties,omitempty"`
+	Image      *Image      `xml:"image,omitempty"`
+	Animation  *Animation  `xml:"animation,omitempty"`
 }
 
 // Animation contains a list of animation frames.
