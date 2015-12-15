@@ -135,7 +135,7 @@
  <imagelayer name="objects-toolbox" x="733" y="502">
   <image source="../../../../../../alice-app/data/images/toolbox.png"/>
  </imagelayer>
- <layer name="chara" width="27" height="23">
+ <layer name="$chara" width="27" height="23">
   <data encoding="base64" compression="zlib">
    eJztzbEJADAMBLEDu7b33zWBTJGvTgsIJEnSL6fgVuaahu3MpbwH4KoCJQ==
   </data>
