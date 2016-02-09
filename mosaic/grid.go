@@ -33,6 +33,10 @@ type Cell struct {
 	// tint, etc.
 }
 
+func (c Cell) Empty() bool {
+	return c.Tile == 0
+}
+
 func (p *Grid) Bounds() image.Rectangle {
 	return p.Rect
 }
@@ -50,13 +54,14 @@ func (p *Grid) CellsOffset(x, y int) int {
 	return (y-p.Rect.Min.Y)*p.Stride + (x-p.Rect.Min.X)*1
 }
 
-func (p *Grid) SetCell(x, y int, c Cell) {
-	if !(image.Point{x, y}.In(p.Rect)) {
-		return
+func (p *Grid) SetCell(x, y int, c Cell) (inrange bool) {
+	if (image.Point{x, y}).In(p.Rect) {
+		i := p.CellsOffset(x, y)
+		p.Tile[i] = c.Tile
+		p.Rot[i] = c.Rot
+		inrange = true
 	}
-	i := p.CellsOffset(x, y)
-	p.Tile[i] = c.Tile
-	p.Rot[i] = c.Rot
+	return inrange
 }
 
 // SubImage returns an image representing the portion of the image p visible through r.
