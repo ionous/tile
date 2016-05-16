@@ -11,11 +11,13 @@ func NewMap(name string) *Map {
 }
 
 type Layer struct {
-	Name   string
-	Layers []*Layer `json:",omitempty"`
-	Grid   *Grid    `json:",omitempty"`
-	Image  *Image   `json:",omitempty"`
-	Bounds image.Rectangle
+	Name       string
+	Layers     []*Layer         `json:",omitempty"`
+	Grid       *Grid            `json:",omitempty"`
+	Image      *Image           `json:",omitempty"`
+	Shapes     *Shapes          `json:",omitempty"`
+	Bounds     *image.Rectangle `json:",omitempty"`
+	Properties map[string]bool  `json:",omitempty"`
 	// x,y, rotation, etc.
 	// effects.
 	// pixel size?

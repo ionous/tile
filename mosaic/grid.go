@@ -51,7 +51,7 @@ func (p *Grid) CellAt(x, y int) Cell {
 
 // CellsOffset returns the index of the first element of Cells that corresponds to the pixel at (x, y).
 func (p *Grid) CellsOffset(x, y int) int {
-	return (y-p.Rect.Min.Y)*p.Stride + (x-p.Rect.Min.X)*1
+	return (y-p.Rect.Min.Y)*p.Stride + (x - p.Rect.Min.X)
 }
 
 func (p *Grid) SetCell(x, y int, c Cell) (inrange bool) {
@@ -92,7 +92,7 @@ func (p *Grid) Opaque() bool {
 // NewGrid returns a Grid with the given tile bounds.
 func NewGrid(cellSize image.Point, r image.Rectangle) *Grid {
 	w, h := r.Dx(), r.Dy()
-	tile := make([]TileType, 1*w*h)
-	rot := make([]RotType, 1*w*h)
-	return &Grid{tile, rot, 1 * w, r, cellSize}
+	tile := make([]TileType, w*h)
+	rot := make([]RotType, w*h)
+	return &Grid{tile, rot, w, r, cellSize}
 }

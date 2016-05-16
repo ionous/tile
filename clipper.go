@@ -18,7 +18,7 @@ import (
 
 // Clip image data from the passed data
 func Clip(tiles TileSets, remap Remap) (
-	_ image.Image,
+	ret image.Image,
 	err error,
 ) {
 	// determine the number of tiles necessary to fit all of the indicies we have used.
@@ -30,37 +30,41 @@ func Clip(tiles TileSets, remap Remap) (
 	tileWidth, tileHeight := tiles.TileSize()
 	rect := image.Rect(0, 0, tilesWide*tileWidth, tilesHigh*tileHeight)
 	if rect.Empty() {
-		panic("clipping empty tile")
-	}
-	out := image.NewRGBA(rect)
-	outPt := image.Pt(0, 0)
+		err = fmt.Errorf("clipping empty tile")
+	} else {
+		out := image.NewRGBA(rect)
+		outPt := image.Pt(0, 0)
 
-	for _, id := range remap.Tiles() {
-		if tile, ok := clipper.GetTile(id); !ok {
-			err = fmt.Errorf("couldnt find tile %v", id)
-			break
-		} else if sheet, ok := clipper.GetSheet(tile.Sheet); !ok {
-			err = fmt.Errorf("couldnt find sheet %v", tile)
-			break
-		} else if srcRect, ok := sheet.Bounds(tile.Cell); !ok {
-			err = fmt.Errorf("couldnt find cell %v", tile)
-			break
-		} else {
-			if srcRect.Empty() {
-				panic("clipping empty bounds")
-			}
-			ux, uy := outPt.X*tileWidth, outPt.Y*tileHeight
-			outRect := image.Rect(ux, uy, ux+srcRect.Dx(), uy+srcRect.Dy())
-			draw.Draw(out, outRect, sheet.Image, srcRect.Min, draw.Src)
-			// move to the next output tile
-			if x := outPt.X + 1; x < tilesWide {
-				outPt.X = x
+		for _, id := range remap.Tiles() {
+			if tile, ok := clipper.GetTile(id); !ok {
+				err = fmt.Errorf("couldnt find tile %v", id)
+				break
+			} else if sheet, ok := clipper.GetSheet(tile.Sheet); !ok {
+				err = fmt.Errorf("couldnt find sheet %v", tile)
+				break
+			} else if srcRect, ok := sheet.Bounds(tile.Cell); !ok {
+				err = fmt.Errorf("couldnt find cell %v", tile)
+				break
 			} else {
-				outPt.X, outPt.Y = 0, outPt.Y+1
+				if srcRect.Empty() {
+					panic("clipping empty bounds")
+				}
+				ux, uy := outPt.X*tileWidth, outPt.Y*tileHeight
+				outRect := image.Rect(ux, uy, ux+srcRect.Dx(), uy+srcRect.Dy())
+				draw.Draw(out, outRect, sheet.Image, srcRect.Min, draw.Src)
+				// move to the next output tile
+				if x := outPt.X + 1; x < tilesWide {
+					outPt.X = x
+				} else {
+					outPt.X, outPt.Y = 0, outPt.Y+1
+				}
 			}
 		}
+		if err == nil {
+			ret = out
+		}
 	}
-	return out, err
+	return ret, err
 }
 
 func NewClipper(ts TileSets) *Clipper {
