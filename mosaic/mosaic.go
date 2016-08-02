@@ -2,22 +2,25 @@ package mosaic
 
 import "image"
 
+type Properties map[string]interface{}
+
 type Map struct {
-	Layer
+	Root       Layer
+	Properties Properties
 }
 
 func NewMap(name string) *Map {
-	return &Map{Layer: Layer{Name: name}}
+	return &Map{Root: Layer{Name: name}}
 }
 
 type Layer struct {
 	Name       string
-	Layers     []*Layer               `json:",omitempty"`
-	Grid       *Grid                  `json:",omitempty"`
-	Image      *Image                 `json:",omitempty"`
-	Shapes     *Shapes                `json:",omitempty"`
-	Bounds     *image.Rectangle       `json:",omitempty"`
-	Properties map[string]interface{} `json:",omitempty"`
+	Layers     []*Layer         `json:",omitempty"`
+	Grid       *Grid            `json:",omitempty"`
+	Image      *Image           `json:",omitempty"`
+	Shapes     *Shapes          `json:",omitempty"`
+	Bounds     *image.Rectangle `json:",omitempty"`
+	Properties Properties       `json:",omitempty"`
 	// x,y, rotation, etc.
 	// effects.
 	// pixel size?
@@ -25,12 +28,12 @@ type Layer struct {
 
 // FindLayer returns the identified layer, if it exists.
 func (m *Map) FindLayer(path []string) *Layer {
-	return m.findLayer(path, false)
+	return m.Root.findLayer(path, false)
 }
 
 // EnsureLayer returns the identified layer, creating all or any of the hierarchy of layers necessary.
 func (m *Map) EnsureLayer(path []string) *Layer {
-	return m.findLayer(path, true)
+	return m.Root.findLayer(path, true)
 }
 
 // Append a new layer of the passed name; doesn't verify whether or not the name is unique.
